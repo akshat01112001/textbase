@@ -1,38 +1,68 @@
-This code defines a Python script that sets up a chatbot using the OpenAI GPT-3.5 Turbo language model to act as a mental health adviser. The chatbot responds to user messages about stress, anxiety, depression symptoms, and other mental health issues by generating appropriate strategies for coping and improvement.
+# Mental Health Adviser Chatbot - GPT-3.5 Turbo
 
-Here's a breakdown of the code:
+This repository contains a Python script that sets up a chatbot using the OpenAI GPT-3.5 Turbo language model to act as a mental health adviser. The chatbot responds to user messages about stress, anxiety, depression symptoms, and other mental health issues by generating appropriate strategies for coping and improvement.
 
-Importing necessary modules:
+## Prerequisites
 
-textbase: A module that facilitates the interaction with the GPT-3.5 Turbo model.
-Message: A class to represent a chat message.
-models: A sub-module to handle the interaction with the OpenAI GPT-3.5 Turbo model.
-os: A module to access the operating system environment variables.
-List: A type hint for lists.
-Setting up the OpenAI API key:
-The code sets the API key for the GPT-3.5 Turbo model. The API key is necessary to make requests to the OpenAI service. It can be either hardcoded directly in the script or retrieved from an environment variable. For demonstration purposes, it is hard-coded in this code.
+Before running the chatbot script, you need to have the following:
 
-Defining the system prompt:
-The SYSTEM_PROMPT variable contains a template for the initial message the chatbot will receive when a conversation starts. The prompt instructs the chatbot to act as a mental health adviser, providing guidance and advice on managing stress, anxiety, and other mental health issues. It also sets the expectation for the chatbot's response tone to be precise, soothing, and easy to understand.
+1. Python: Make sure you have Python 3.x installed on your system.
 
-Defining the chatbot logic using a decorator:
-The function on_message is decorated with @textbase.chatbot("talking-bot"). This decorator configures the function to work as a chatbot with the name "talking-bot."
+2. OpenAI API Key: You will need a valid API key from OpenAI to access the GPT-3.5 Turbo model. The API key can be hardcoded in the script or stored as an environment variable. Please ensure you have the necessary permissions to interact with the GPT-3.5 Turbo model.
 
-Chatbot logic:
-The on_message function receives two parameters:
+3. Required Libraries: Install the required libraries using the following command:
 
-message_history: A list of Message objects representing the conversation history.
-state: A dictionary to store any stateful information across multiple interactions.
-Handling the chatbot state:
-The function checks if the state is None or if the "counter" key is missing in the state dictionary. If it's the first interaction, it initializes the state dictionary with a "counter" set to 0.
+```
+cd textbase
+poetry install
+```
 
-Generating a chatbot response:
-The code uses the models.OpenAI.generate() function to generate a response from the GPT-3.5 Turbo model. It provides the following inputs to the function:
+## Setting Up the API Key
 
-system_prompt: The initial prompt that sets the context for the chatbot's responses.
-message_history: The last two messages in the conversation as a list of Message objects. This helps in maintaining context for the model's responses.
-model: The specific language model to use, which is "gpt-3.5-turbo" in this case.
-Returning the bot response and updated state:
-The function returns the generated bot_response and the updated state dictionary (if applicable). The response can be either a string or a tuple containing the response and updated state. The Message objects in the message_history are used to maintain the context in the conversation.
+In the chatbot.py script, look for the following section:
 
-Please note that to run this code, you need to have the textbase package installed, and you also need access to the OpenAI GPT-3.5 Turbo model using a valid API key. Additionally, ensure that the API key is valid and has the necessary permissions to interact with the GPT-3.5 Turbo model.
+```
+# Load your OpenAI API key
+models.OpenAI.api_key = "API KEY"
+# or from environment variable:
+# models.OpenAI.api_key = os.getenv("OPENAI_API_KEY")
+```
+
+Replace the placeholder API key with your actual API key or uncomment the os.getenv line and set the API key as an environment variable.
+
+## Running the Chatbot
+
+To run the mental health adviser chatbot, simply execute the main.py script using Python:
+
+```
+poetry run python textbase/textbase_cli.py test main.py
+```
+
+The chatbot will start interacting with you based on the initial system prompt and generate responses using the GPT-3.5 Turbo model.
+
+## Customizing the Chatbot
+
+If you wish to customize the behavior of the chatbot or modify the system prompt, you can do so in the main.py script.
+
+To change the system prompt, modify the SYSTEM_PROMPT variable:
+
+```
+SYSTEM_PROMPT = """Please act as a mental health adviser. I will provide you with a patient looking for guidance and advice on managing their stress, anxiety and other mental health issues. You should use your knowledge of all mental issues and their respective solutions in order to create strategies that the individual can implement for overall improvement. Your tone should be precise, soothing and easy to understand. My first response is "I need your help to cope up with my depression symptoms".
+"""
+```
+
+## Important Notes
+
+- The chatbot's responses are generated using the GPT-3.5 Turbo model, and the quality of responses depends on the model's training and the accuracy of the initial system prompt.
+
+- The chatbot maintains context by using the last two messages in the conversation history.
+
+- Please use this chatbot responsibly and avoid sharing sensitive or personal information.
+
+- Make sure to comply with OpenAI's terms of service and usage policies when using the GPT-3.5 Turbo model.
+
+## License
+
+This project is licensed under the MIT License.
+
+Feel free to use and modify this chatbot for your own purposes. If you encounter any issues or have suggestions for improvements, please feel free to create an issue or pull request. Happy chatting!
